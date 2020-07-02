@@ -1,24 +1,17 @@
-package collax.discord;
+package collax.RandomTp;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 
-import java.util.Optional;
 import java.util.Random;
 
 import static net.minecraft.server.command.CommandManager.literal;

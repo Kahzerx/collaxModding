@@ -1,7 +1,7 @@
 package collax;
 
+import collax.RandomTp.RandomTpCommand;
 import collax.discord.DiscordCommand;
-import collax.discord.RandomTpCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.ServerCommandSource;
 

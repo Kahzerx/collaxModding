@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "collax.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "DiscordJoinServerMixin",
+    "DiscordLeftServerMixin",
+    "DiscordRunMixin",
+    "DiscordServerChatListerMixin",
+    "WorldBorderCommandMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

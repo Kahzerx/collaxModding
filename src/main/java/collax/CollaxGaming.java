@@ -1,6 +1,7 @@
 package collax;
 
-import collax.RandomTp.RandomTpCommand;
+import collax.here.HereCommand;
+import collax.randomTp.RandomTpCommand;
 import collax.discord.DiscordCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.ServerCommandSource;
@@ -10,5 +11,6 @@ public class CollaxGaming {
     public static void registerCommand(CommandDispatcher<ServerCommandSource> dispatcher){
         DiscordCommand.register(dispatcher);
         RandomTpCommand.register(dispatcher);
+        HereCommand.register(dispatcher);
     }
 }

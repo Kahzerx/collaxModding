@@ -14,15 +14,15 @@ public class DiscordCommand {
                 .then(CommandManager.literal("setBot")
                         .then(CommandManager.argument("token", StringArgumentType.string())
                                 .then(CommandManager.argument("channelId", StringArgumentType.string())
-                                        .executes(context -> f0(context.getSource(), StringArgumentType.getString(context, "token"), StringArgumentType.getString(context, "channelId"))))))
+                                        .executes(context -> setup(context.getSource(), StringArgumentType.getString(context, "token"), StringArgumentType.getString(context, "channelId"))))))
                 .then(CommandManager.literal("stop")
-                        .executes(context -> f1(context.getSource())))
+                        .executes(context -> stop(context.getSource())))
                 .then(CommandManager.literal("start")
-                        .executes(context -> f2(context.getSource())))
-                .executes(context -> f3(context.getSource())));
+                        .executes(context -> start(context.getSource())))
+                .executes(context -> info(context.getSource())));
     }
 
-    private static int f0(ServerCommandSource src, String token, String channelId){
+    private static int setup(ServerCommandSource src, String token, String channelId){
         if (DiscordListener.chatBridge){
             src.sendFeedback(new LiteralText("Please stop the CollaxGaming before you make any changes"), false);
         }
@@ -33,7 +33,7 @@ public class DiscordCommand {
         return 1;
     }
 
-    private static int f1(ServerCommandSource src){
+    private static int stop(ServerCommandSource src){
         if (DiscordListener.chatBridge){
             DiscordListener.stop();
             DiscordFileManager.updateFile(false);
@@ -45,7 +45,7 @@ public class DiscordCommand {
         return 1;
     }
 
-    private static int f2(ServerCommandSource src){
+    private static int start(ServerCommandSource src){
         String[] result = DiscordFileManager.readFile();
         if (!DiscordListener.chatBridge){
             if (!result[0].equals("") && !result[1].equals("") && !result[2].equals("")) {
@@ -67,7 +67,7 @@ public class DiscordCommand {
         return 1;
     }
 
-    private static int f3(ServerCommandSource src){
+    private static int info(ServerCommandSource src){
         if (DiscordListener.chatBridge) src.sendFeedback(new LiteralText("Chat bridge is currently on!"), false);
         else src.sendFeedback(new LiteralText("Chat bridge is currently off!"), false);
 

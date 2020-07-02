@@ -1,7 +1,6 @@
-package collax.RandomTp;
+package collax.randomTp;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
@@ -21,20 +20,20 @@ public class RandomTpCommand {
         dispatcher.register(literal("randomCoords").
                 requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).
                 then(CommandManager.argument("playerName", EntityArgumentType.entity()).
-                        executes(context -> f0(context.getSource(), EntityArgumentType.getEntity(context, "playerName")))));
+                        executes(context -> tpAndSpawnPoint(context.getSource(), EntityArgumentType.getEntity(context, "playerName")))));
     }
 
-    public static int f0(ServerCommandSource source, Entity playerName) throws CommandSyntaxException {
-        if (playerName instanceof ServerPlayerEntity){
+    public static int tpAndSpawnPoint(ServerCommandSource source, Entity player) {
+        if (player instanceof ServerPlayerEntity){
             Random rand = new Random();
             double X = -10000 + (10000 + 10000) * rand.nextDouble();
             double Z = -10000 + (10000 + 10000) * rand.nextDouble();
             double Y = 255;
-            playerName.teleport(X, Y, Z);
-            BlockPos pos1 = source.getWorld().getTopPosition(Heightmap.Type.WORLD_SURFACE, playerName.getBlockPos());
-            playerName.teleport(X, pos1.getY(), Z);
-            ((ServerPlayerEntity) playerName).setSpawnPoint(World.OVERWORLD, playerName.getBlockPos(), true, false);
-            ((ServerPlayerEntity) playerName).sendMessage(new LiteralText("Recuerda usar el setHome, más información en !!comandos2"), false);
+            player.teleport(X, Y, Z);
+            BlockPos pos1 = source.getWorld().getTopPosition(Heightmap.Type.WORLD_SURFACE, player.getBlockPos());
+            player.teleport(X, pos1.getY(), Z);
+            ((ServerPlayerEntity) player).setSpawnPoint(World.OVERWORLD, player.getBlockPos(), true, false);
+            ((ServerPlayerEntity) player).sendMessage(new LiteralText("Recuerda usar el setHome, más información en !!comandos2"), false);
         }
         return 1;
     }

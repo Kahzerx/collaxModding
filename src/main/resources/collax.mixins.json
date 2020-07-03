@@ -4,6 +4,7 @@
   "package": "collax.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "CommandManagerSeedMixin",
     "DiscordJoinServerMixin",
     "DiscordLeftServerMixin",
     "DiscordRunMixin",

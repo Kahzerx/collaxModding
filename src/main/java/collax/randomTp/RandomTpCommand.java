@@ -19,8 +19,8 @@ public class RandomTpCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher){
         dispatcher.register(literal("randomCoords").
                 requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).
-                then(CommandManager.argument("playerName", EntityArgumentType.entity()).
-                        executes(context -> tpAndSpawnPoint(context.getSource(), EntityArgumentType.getEntity(context, "playerName")))));
+                then(CommandManager.argument("player", EntityArgumentType.entity()).
+                        executes(context -> tpAndSpawnPoint(context.getSource(), EntityArgumentType.getEntity(context, "player")))));
     }
 
     public static int tpAndSpawnPoint(ServerCommandSource source, Entity player) {

@@ -14,7 +14,7 @@ public class DiscordJoinServerMixin {
     @Inject(method = "onPlayerConnect", at = @At("RETURN"))
     private void onPlayerJoin(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci){
         if (DiscordListener.chatBridge){
-            DiscordListener.sendMessage("**" + player.getName().getString() + " joined the game!**");
+            DiscordListener.sendMessage(":arrow_right: **" + player.getName().getString() + " joined the game!**");
         }
     }
 }

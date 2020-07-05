@@ -1,5 +1,6 @@
 package collax.back;
 
+import collax.CollaxFileManager;
 import collax.CollaxGaming;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,9 +15,9 @@ import org.json.simple.JSONObject;
 public class BackFileManager {
     public static void setDeath(String player, World world, double x, double y, double z){
         try{
-            JSONArray playerList = CollaxGaming.getFileContent();
+            JSONArray playerList = CollaxFileManager.getFileContent();
             playerList.forEach(pl -> parsePlayerDeath((JSONObject)pl, player, world, x, y, z));
-            CollaxGaming.updateFile();
+            CollaxFileManager.updateFile();
         } catch (Exception ignored) { }
     }
 
@@ -24,10 +25,10 @@ public class BackFileManager {
         JSONObject playerObject = (JSONObject) playerObj.get("player");
         String name = (String)playerObject.get("name");
         if (name.equals(player)){
-            CollaxGaming.updatedPlayerList.add(updateDeathPos(playerObject.get("home"), playerObject.get("name"), playerObject.get("perms"), x, y, z, CollaxGaming.getDim(world)));
+            CollaxFileManager.updatedPlayerList.add(updateDeathPos(playerObject.get("home"), playerObject.get("name"), playerObject.get("perms"), x, y, z, CollaxGaming.getDim(world)));
         }
         else {
-            CollaxGaming.updatedPlayerList.add(playerObj);
+            CollaxFileManager.updatedPlayerList.add(playerObj);
         }
     }
 
@@ -51,7 +52,7 @@ public class BackFileManager {
     }
 
     public static void tpDeathPos(ServerPlayerEntity player){
-        JSONArray playerList = CollaxGaming.getFileContent();
+        JSONArray playerList = CollaxFileManager.getFileContent();
         playerList.forEach(pl -> parsePlayerDeathPos((JSONObject)pl, player));
     }
 

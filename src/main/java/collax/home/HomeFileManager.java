@@ -1,5 +1,6 @@
 package collax.home;
 
+import collax.CollaxFileManager;
 import collax.CollaxGaming;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -15,9 +16,9 @@ public class HomeFileManager {
 
     public static void setHome(ServerPlayerEntity player, World world, double x, double y, double z){
         try{
-            JSONArray playerList = CollaxGaming.getFileContent();
+            JSONArray playerList = CollaxFileManager.getFileContent();
             playerList.forEach(pl -> parsePlayerHome((JSONObject)pl, player, world, x, y, z));
-            CollaxGaming.updateFile();
+            CollaxFileManager.updateFile();
             player.sendMessage(new LiteralText("Home set: " + CollaxGaming.getDimensionWithColor(world) + CollaxGaming.formatCoords(x, y, z)), false);
         } catch (Exception ignored) { }
     }
@@ -26,10 +27,10 @@ public class HomeFileManager {
         JSONObject playerObject = (JSONObject) playerObj.get("player");
         String name = (String)playerObject.get("name");
         if (name.equals(player.getName().getString())){
-            CollaxGaming.updatedPlayerList.add(updateHomePos(playerObject.get("death"), playerObject.get("name"), playerObject.get("perms"), x, y, z, CollaxGaming.getDim(world)));
+            CollaxFileManager.updatedPlayerList.add(updateHomePos(playerObject.get("death"), playerObject.get("name"), playerObject.get("perms"), x, y, z, CollaxGaming.getDim(world)));
         }
         else {
-            CollaxGaming.updatedPlayerList.add(playerObj);
+            CollaxFileManager.updatedPlayerList.add(playerObj);
         }
     }
 
@@ -54,7 +55,7 @@ public class HomeFileManager {
 
 
     public static void tpHome(ServerPlayerEntity player){
-        JSONArray playerList = CollaxGaming.getFileContent();
+        JSONArray playerList = CollaxFileManager.getFileContent();
         playerList.forEach(pl -> parsePlayerHome((JSONObject)pl, player));
     }
 

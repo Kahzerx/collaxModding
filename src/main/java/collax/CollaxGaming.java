@@ -24,7 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CollaxGaming {
-    public static String[] bannedWords = {"c", "C", "s", "S", "!!skull", "!!tp", "!!comandos", "!!comandos2", "!!comandos3", "!!resethome"};
+    public static String[] bannedWords = {"c", "C", "s", "S", "!!skull", "!!tp", "!!comandos"};
 
     private static final String fileName = "CollaxPlayers.json";
 

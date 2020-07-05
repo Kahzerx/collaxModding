@@ -109,7 +109,7 @@ public class DiscordListener extends ListenerAdapter {
     public static EmbedBuilder generateEmbed(StringBuilder msg, int n) {
         try {
             final EmbedBuilder emb = new EmbedBuilder();
-            emb.setColor(new Color(0, 255, 0).brighter());
+            emb.setColor(Color.decode("#2ECC71"));
             if (n > 1) emb.setDescription("**" + n + " players online** \n\n" + msg.toString());
             else emb.setDescription(n == 0 ? "**No players online :(**" : "**" + n + " player online** \n\n" + msg.toString());
             return emb;

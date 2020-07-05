@@ -50,7 +50,7 @@ public class DiscordCommand {
         if (!DiscordListener.chatBridge){
             if (!result[0].equals("") && !result[1].equals("") && !result[2].equals("")) {
                 try {
-                    DiscordListener.connect(src.getMinecraftServer(), result[0], result[1], src.getPlayer().getName().toString());
+                    DiscordListener.connect(src.getMinecraftServer(), result[0], result[1]);
                     src.sendFeedback(new LiteralText("Discord integration is running"), false);
                 } catch (Exception e) {
                     System.out.println(e);

@@ -1,5 +1,6 @@
 package collax.discord;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -7,11 +8,14 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +32,7 @@ public class DiscordListener extends ListenerAdapter {
         this.server = s;
     }
 
-    public static void connect(MinecraftServer server, String t, String c, String playerName){
+    public static void connect(MinecraftServer server, String t, String c){
         token = t;
         channelId = c;
         try{
@@ -47,7 +51,20 @@ public class DiscordListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         if (chatBridge){
-            if (event.getChannel().getId().equals(channelId)){
+            if (event.getMessage().getContentRaw().equals("!ping")){
+                event.getChannel().sendMessage("Pong!").queue();
+            }
+
+            else if (event.getMessage().getContentRaw().equals("!online")){
+                StringBuilder msg = new StringBuilder();
+                int n = server.getPlayerManager().getPlayerList().size();
+                for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()){
+                    msg.append(player.getName().getString().replace("_", "\\_")).append("\n");
+                }
+                event.getChannel().sendMessage(Objects.requireNonNull(generateEmbed(msg, n)).build()).queue();
+            }
+
+            else if (event.getChannel().getId().equals(channelId)){
                 if (event.getMessage().getContentDisplay().equals("")) return;
                 if (event.getAuthor().isBot()) return;
                 String msg = "[Discord] <" + event.getAuthor().getName() + "> " + event.getMessage().getContentDisplay();
@@ -87,5 +104,18 @@ public class DiscordListener extends ListenerAdapter {
     public static void stop(){
         process.shutdownNow();
         chatBridge = false;
+    }
+
+    public static EmbedBuilder generateEmbed(StringBuilder msg, int n) {
+        try {
+            final EmbedBuilder emb = new EmbedBuilder();
+            emb.setColor(new Color(0, 255, 0).brighter());
+            if (n > 1) emb.setDescription("**" + n + " players online** \n\n" + msg.toString());
+            else emb.setDescription(n == 0 ? "**No players online :(**" : "**" + n + " player online** \n\n" + msg.toString());
+            return emb;
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

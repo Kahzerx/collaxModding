@@ -24,6 +24,7 @@ dependencies {
 
 	compile 'org.slf4j:slf4j-nop:1.7.25'
 	compile 'net.dv8tion:JDA:4.1.1_126'
+	compile 'com.googlecode.json-simple:json-simple:1.1.1'
 
 	include 'org.slf4j:slf4j-nop:1.7.25'
 	include 'net.dv8tion:JDA:4.1.1_126'
@@ -39,6 +40,7 @@ dependencies {
 	include 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
 	include 'com.fasterxml.jackson.core:jackson-annotations:2.10.1'
 	include 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+	include 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 processResources {

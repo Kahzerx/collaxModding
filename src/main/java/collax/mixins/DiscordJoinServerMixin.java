@@ -1,5 +1,6 @@
 package collax.mixins;
 
+import collax.CollaxGaming;
 import collax.discord.DiscordListener;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
@@ -16,5 +17,6 @@ public class DiscordJoinServerMixin {
         if (DiscordListener.chatBridge){
             DiscordListener.sendMessage(":arrow_right: **" + player.getName().getString() + " joined the game!**");
         }
+        CollaxGaming.onPlayerJoins(player);
     }
 }

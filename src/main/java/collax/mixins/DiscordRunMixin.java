@@ -1,5 +1,6 @@
 package collax.mixins;
 
+import collax.CollaxGaming;
 import collax.discord.DiscordFileManager;
 import collax.discord.DiscordListener;
 import net.minecraft.server.MinecraftServer;
@@ -27,6 +28,8 @@ public class DiscordRunMixin {
         catch (Exception e){
             System.out.println("config file not created");
         }
+
+        CollaxGaming.tryCreatePlayerFile();
     }
 
     @Inject(method = "method_29741", at = @At("RETURN"))

@@ -18,7 +18,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 import static net.minecraft.server.command.CommandSource.suggestMatching;
 
-public class AdminTp {
+public class AdminTeleportCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher){
         dispatcher.register(literal("adminTp").
                 requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).

@@ -9,6 +9,7 @@ import collax.home.SetHomeCommand;
 import collax.perms.PermsCommand;
 import collax.randomTp.RandomTpCommand;
 import collax.discord.DiscordCommand;
+import collax.teleport.AdminTp;
 import collax.teleport.CustomTeleportCommand;
 import collax.where.WhereCommand;
 import com.google.common.collect.Sets;
@@ -40,6 +41,7 @@ public class CollaxGaming {
         CameraCommand.register(dispatcher);
         SurvivalCommand.register(dispatcher);
         CustomTeleportCommand.register(dispatcher);
+        AdminTp.register(dispatcher);
     }
 
     public static String getDimensionWithColor(ServerPlayerEntity player) {

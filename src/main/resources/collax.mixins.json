@@ -11,6 +11,7 @@
     "DiscordOnDeathMixin",
     "DiscordRunMixin",
     "DiscordServerChatListerMixin",
+    "TeleportCommandMixin",
     "WorldBorderCommandMixin"
   ],
   "client": [

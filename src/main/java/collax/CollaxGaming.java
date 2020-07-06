@@ -14,8 +14,12 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
+
 public class CollaxGaming {
     public static String[] bannedWords = {"c", "C", "s", "S", "!!skull", "!!tp", "!!comandos"};
+
+    public static HashMap<String, String> permsArray = new HashMap<>();
 
     public static void registerCommand(CommandDispatcher<ServerCommandSource> dispatcher){
         DiscordCommand.register(dispatcher);

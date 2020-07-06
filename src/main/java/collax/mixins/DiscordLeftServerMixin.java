@@ -1,6 +1,7 @@
 package collax.mixins;
 
 import collax.discord.DiscordListener;
+import collax.perms.Perms;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -18,5 +19,6 @@ public class DiscordLeftServerMixin {
         if (DiscordListener.chatBridge){
             DiscordListener.sendMessage(":arrow_left: **" + player.getName().getString() + " left the game!**");
         }
+        Perms.removeFromArray(player.getName().getString());
     }
 }

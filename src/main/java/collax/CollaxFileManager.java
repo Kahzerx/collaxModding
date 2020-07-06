@@ -75,7 +75,7 @@ public class CollaxFileManager {
 
         playerInformation.put("name", player.getName().getString());
 
-        playerInformation.put("perms", 1);
+        playerInformation.put("perms", "1");
 
         JSONObject playersObject = new JSONObject();
         playersObject.put("player", playerInformation);
@@ -108,7 +108,7 @@ public class CollaxFileManager {
 
         playerInformation.put("name", player.getName().getString());
 
-        playerInformation.put("perms", 1);
+        playerInformation.put("perms", "1");
 
         JSONObject playersObject = new JSONObject();
         playersObject.put("player", playerInformation);

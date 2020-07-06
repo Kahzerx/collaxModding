@@ -2,6 +2,7 @@ package collax.mixins;
 
 import collax.CollaxFileManager;
 import collax.discord.DiscordListener;
+import collax.perms.Perms;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,5 +19,6 @@ public class DiscordJoinServerMixin {
             DiscordListener.sendMessage(":arrow_right: **" + player.getName().getString() + " joined the game!**");
         }
         CollaxFileManager.onPlayerJoins(player);
+        Perms.addToArray(player.getName().getString());
     }
 }

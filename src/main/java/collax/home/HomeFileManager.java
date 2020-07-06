@@ -86,13 +86,6 @@ public class HomeFileManager {
                         break;
                 }
                 player.teleport(dimension, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z), player.yaw, player.pitch);
-
-                if (Integer.parseInt(CollaxGaming.permsArray.get(player.getName().getString())) > 1){
-                    player.setGameMode(GameMode.SPECTATOR);
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 999999, 0, false, false));
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.CONDUIT_POWER, 999999, 0, false, false));
-                    player.sendMessage(new LiteralText("Use '/s' to go back to survival mode"), false);
-                }
             }
         }
     }

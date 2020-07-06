@@ -1,5 +1,6 @@
 package collax.discord;
 
+import collax.perms.PermsFileManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -62,6 +63,25 @@ public class DiscordListener extends ListenerAdapter {
                     msg.append(player.getName().getString().replace("_", "\\_")).append("\n");
                 }
                 event.getChannel().sendMessage(Objects.requireNonNull(generateEmbed(msg, n)).build()).queue();
+            }
+
+            else if (event.getMessage().getContentRaw().startsWith("!give ")){
+                if (event.getChannel().getId().equals("729673978766950462")){
+                    String[] req = event.getMessage().getContentRaw().split(" ");
+                    if (req.length == 3){
+                        String player = req[1];
+                        try {
+                            int permsInt = Integer.parseInt(req[2]);
+                            if (permsInt > 0 && permsInt < 4) event.getChannel().sendMessage(PermsFileManager.setPerm(player, permsInt)).queue();
+                            else event.getChannel().sendMessage("Pls input an integer between 1 and 3").queue();
+                        }
+                        catch (Exception e){
+                            event.getChannel().sendMessage("Pls input an integer between 1 and 3").queue();
+                        }
+                    }
+                    else event.getChannel().sendMessage("How to: !give <playerName> <int 1 to 3>").queue();
+                }
+                else event.getChannel().sendMessage("You can't use this command here").queue();
             }
 
             else if (event.getChannel().getId().equals(channelId)){

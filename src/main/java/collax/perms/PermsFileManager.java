@@ -29,6 +29,24 @@ public class PermsFileManager {
         playerFound = false;
     }
 
+    public static String setPerm(String player, int val){
+        playerFound = false;
+        JSONArray playerList = CollaxFileManager.getFileContent();
+        playerList.forEach(pl -> parsePlayerPerms((JSONObject)pl, player, val));
+        if (playerFound){
+            CollaxFileManager.updateFile();
+            if (CollaxGaming.permsArray.containsKey(player)){
+                CollaxGaming.permsArray.remove(player);
+                CollaxGaming.permsArray.put(player, String.valueOf(val));
+            }
+            playerFound = false;
+            return player + " perms = " + val;
+        }
+        else {
+            return "Unable to set perms";
+        }
+    }
+
     public static void parsePlayerPerms(JSONObject playerObj, String player, int val){
         JSONObject playerObject = (JSONObject) playerObj.get("player");
         String name = (String)playerObject.get("name");

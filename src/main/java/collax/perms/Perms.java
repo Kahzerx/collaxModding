@@ -17,7 +17,6 @@ public class Perms {
         if (name.equals(player)){
             String value = (String)playerObject.get("perms");
             CollaxGaming.permsArray.put(name, value);
-            System.out.println(CollaxGaming.permsArray);
         }
     }
 
@@ -31,7 +30,6 @@ public class Perms {
         String name = (String)playerObject.get("name");
         if (name.equals(player)){
             CollaxGaming.permsArray.remove(name);
-            System.out.println(CollaxGaming.permsArray);
         }
     }
 }

@@ -1,12 +1,16 @@
 package collax;
 
 import collax.back.BackCommand;
+import collax.cameraAndSurvival.CameraCommand;
+import collax.cameraAndSurvival.SurvivalCommand;
 import collax.here.HereCommand;
 import collax.home.HomeCommand;
 import collax.home.SetHomeCommand;
+import collax.perms.PermsCommand;
 import collax.randomTp.RandomTpCommand;
 import collax.discord.DiscordCommand;
 import collax.where.WhereCommand;
+import com.google.common.collect.Sets;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -14,10 +18,12 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 public class CollaxGaming {
-    public static String[] bannedWords = {"c", "C", "s", "S", "!!skull", "!!tp", "!!comandos"};
+    public static String[] bannedWords = {"!!skull", "!!tp", "!!comandos"};
 
     public static HashMap<String, String> permsArray = new HashMap<>();
 
@@ -29,6 +35,9 @@ public class CollaxGaming {
         SetHomeCommand.register(dispatcher);
         HomeCommand.register(dispatcher);
         BackCommand.register(dispatcher);
+        PermsCommand.register(dispatcher);
+        CameraCommand.register(dispatcher);
+        SurvivalCommand.register(dispatcher);
     }
 
     public static String getDimensionWithColor(ServerPlayerEntity player) {
@@ -60,5 +69,11 @@ public class CollaxGaming {
 
     public static String formatCoords(double x, double y, double z){
         return Formatting.WHITE + " [x: " + (int) x + ", y: " + (int) y + ", z: " + (int) z + "]";
+    }
+
+    public static Collection<String> getPlayers(ServerCommandSource source) {
+        Set<String> players = Sets.newLinkedHashSet();
+        players.addAll(source.getPlayerNames());
+        return players;
     }
 }

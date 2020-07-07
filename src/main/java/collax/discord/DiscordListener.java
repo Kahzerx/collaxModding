@@ -1,14 +1,18 @@
 package collax.discord;
 
 import collax.perms.PermsFileManager;
+import com.mojang.authlib.GameProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.minecraft.command.arguments.GameProfileArgumentType;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.Whitelist;
+import net.minecraft.server.WhitelistEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
@@ -52,17 +56,73 @@ public class DiscordListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         if (chatBridge){
-            if (event.getMessage().getContentRaw().equals("!ping")){
-                event.getChannel().sendMessage("Pong!").queue();
-            }
-
-            else if (event.getMessage().getContentRaw().equals("!online")){
+            if (event.getMessage().getContentRaw().startsWith("!online ")){
                 StringBuilder msg = new StringBuilder();
                 int n = server.getPlayerManager().getPlayerList().size();
                 for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()){
                     msg.append(player.getName().getString().replace("_", "\\_")).append("\n");
                 }
                 event.getChannel().sendMessage(Objects.requireNonNull(generateEmbed(msg, n)).build()).queue();
+            }
+
+            else if (event.getMessage().getContentRaw().startsWith("!add ")){
+                if (event.getChannel().getId().equals("728989824345833582")){
+                    String[] req = event.getMessage().getContentRaw().split(" ");
+                    if (req.length == 2){
+                        Whitelist whitelist = server.getPlayerManager().getWhitelist();
+                        GameProfile gameProfile = server.getUserCache().findByName(req[1]);
+                        if (gameProfile != null){
+                            if (!whitelist.isAllowed(gameProfile)){
+                                WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
+                                whitelist.add(whitelistEntry);
+                                event.getChannel().sendMessage("añadido :)").queue();
+                            }
+                            else event.getChannel().sendMessage("ya estaba en whitelist").queue();
+                        }
+                        else event.getChannel().sendMessage("No es premium :P").queue();
+                    }
+                    else event.getChannel().sendMessage("!add <playerName>").queue();
+                }
+            }
+
+            else if (event.getMessage().getContentRaw().startsWith("!remove ")){
+                if (event.getChannel().getId().equals("728989824345833582")){
+                    String[] req = event.getMessage().getContentRaw().split(" ");
+                    if (req.length == 2){
+                        Whitelist whitelist = server.getPlayerManager().getWhitelist();
+                        GameProfile gameProfile = server.getUserCache().findByName(req[1]);
+                        if (gameProfile != null){
+                            if (whitelist.isAllowed(gameProfile)){
+                                WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
+                                whitelist.remove(whitelistEntry);
+                                event.getChannel().sendMessage("eliminado ;(").queue();
+                            }
+                            else event.getChannel().sendMessage("No está en la whitelist").queue();
+                        }
+                        else event.getChannel().sendMessage("No es premium :P").queue();
+                    }
+                    else event.getChannel().sendMessage("!remove <playerName>").queue();
+                }
+            }
+
+            else if (event.getMessage().getContentRaw().equals("!reload")){
+                if (event.getChannel().getId().equals("728989824345833582")) {
+                    server.getPlayerManager().reloadWhitelist();
+                    event.getChannel().sendMessage("whitelist reloaded").queue();
+                    server.kickNonWhitelistedPlayers(server.getCommandSource());
+                }
+            }
+
+            else if (event.getMessage().getContentRaw().equals("!list")){
+                if (event.getChannel().getId().equals("728989824345833582")) {
+                    String[] names = server.getPlayerManager().getWhitelistedNames();
+                    if (names.length == 0) {
+                        event.getChannel().sendMessage("whitelist is empty").queue();
+                    } else {
+                        String msg = String.join(", ", names);
+                        event.getChannel().sendMessage("whitelist: `" + msg + "`").queue();
+                    }
+                }
             }
 
             else if (event.getMessage().getContentRaw().startsWith("!give ")){

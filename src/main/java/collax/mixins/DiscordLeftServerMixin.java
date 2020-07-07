@@ -17,7 +17,7 @@ public class DiscordLeftServerMixin {
     @Inject(method = "onDisconnected", at = @At("RETURN"))
     private void onPlayerLeft(Text reason, CallbackInfo ci){
         if (DiscordListener.chatBridge){
-            DiscordListener.sendMessage(":arrow_left: **" + player.getName().getString() + " left the game!**");
+            DiscordListener.sendMessage(":arrow_left: **" + player.getName().getString().replace("_", "\\_") + " left the game!**");
         }
         Perms.removeFromArray(player.getName().getString());
     }

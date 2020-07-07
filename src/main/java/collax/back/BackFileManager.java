@@ -2,12 +2,9 @@ package collax.back;
 
 import collax.CollaxFileManager;
 import collax.CollaxGaming;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

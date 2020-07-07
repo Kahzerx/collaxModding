@@ -33,7 +33,7 @@ public class RandomTpCommand {
             BlockPos pos1 = source.getWorld().getTopPosition(Heightmap.Type.WORLD_SURFACE, player.getBlockPos());
             player.teleport(X, pos1.getY(), Z);
             ((ServerPlayerEntity) player).setSpawnPoint(World.OVERWORLD, player.getBlockPos(), true, false);
-            ((ServerPlayerEntity) player).sendMessage(new LiteralText("Recuerda usar el setHome, más información en !!comandos2"), false);
+            ((ServerPlayerEntity) player).sendMessage(new LiteralText("Recuerda usar el /setHome"), false);
         }
         return 1;
     }

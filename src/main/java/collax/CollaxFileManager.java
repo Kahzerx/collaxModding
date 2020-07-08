@@ -36,7 +36,7 @@ public class CollaxFileManager {
             registerPlayer(player);
         }
         else {
-            boolean exists = checkIfPlayerExists(player.getDisplayName().getString(), playerList);
+            boolean exists = checkIfPlayerExists(player.getName().getString(), playerList);
             if (!exists){
                 registerPlayer(player, playerList);
             }

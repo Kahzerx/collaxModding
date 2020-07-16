@@ -18,7 +18,7 @@ public class CameraCommand {
     }
 
     public static int setCameraMode(ServerCommandSource source) throws CommandSyntaxException {
-        if (Integer.parseInt(CollaxGaming.permsArray.get(source.getPlayer().getName().getString())) > 1){
+        if (Integer.parseInt(CollaxGaming.permsArray.get(source.getPlayer().getName().getString())) > 2){
             source.getPlayer().setGameMode(GameMode.SPECTATOR);
             source.getPlayer().addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 999999, 0, false, false));
             source.getPlayer().addStatusEffect(new StatusEffectInstance(StatusEffects.CONDUIT_POWER, 999999, 0, false, false));

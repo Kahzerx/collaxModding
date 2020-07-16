@@ -7,7 +7,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.*;
+import net.minecraft.util.Formatting;
 
 import static net.minecraft.server.command.CommandManager.literal;
 import static net.minecraft.server.command.CommandSource.suggestMatching;
@@ -31,11 +32,22 @@ public class CustomTeleportCommand {
     private static int tp(ServerCommandSource source, String player) throws CommandSyntaxException {
         ServerPlayerEntity playerEntity = source.getMinecraftServer().getPlayerManager().getPlayer(player);
         if (playerEntity instanceof ServerPlayerEntity){
-            if (Integer.parseInt(CollaxGaming.permsArray.get(source.getPlayer().getName().getString())) > 1){
-                Teleport.addPlayer(source.getPlayer().getName().getString(), player);
-                playerEntity.sendMessage(new LiteralText(source.getPlayer().getName().getString() + " te ha solicitado tp, usa /tpa accept <player> para aceptar o /tpa deny <player> para rechazar"), false);
+
+            if (playerEntity.isSpectator()) {
+
+                if (Integer.parseInt(CollaxGaming.permsArray.get(source.getPlayer().getName().getString())) > 2){
+
+                    Teleport.addPlayer(source.getPlayer().getName().getString(), player);
+                    playerEntity.sendMessage(Teleport.getMsg(source.getPlayer().getName().getString()), false);
+                }
+                else {
+                    source.sendFeedback(new LiteralText("no puedes hacerte tp a una persona en modo espectador"), false);
+                }
             }
-            else source.sendFeedback(new LiteralText("You are not allowed to use this command :P"), false);
+            else{
+                Teleport.addPlayer(source.getPlayer().getName().getString(), player);
+                playerEntity.sendMessage(Teleport.getMsg(source.getPlayer().getName().getString()), false);
+            }
         }
         else source.sendFeedback(new LiteralText("This player doesn't exist"), false);
         return 1;

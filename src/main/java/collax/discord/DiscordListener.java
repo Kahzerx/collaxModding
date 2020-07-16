@@ -1,18 +1,14 @@
 package collax.discord;
 
 import collax.perms.PermsFileManager;
-import com.mojang.authlib.GameProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.minecraft.command.arguments.GameProfileArgumentType;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.Whitelist;
-import net.minecraft.server.WhitelistEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
@@ -56,7 +52,7 @@ public class DiscordListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         if (chatBridge){
-            if (event.getMessage().getContentRaw().startsWith("!online ")){
+            if (event.getMessage().getContentRaw().equals("!online")){
                 StringBuilder msg = new StringBuilder();
                 int n = server.getPlayerManager().getPlayerList().size();
                 for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()){

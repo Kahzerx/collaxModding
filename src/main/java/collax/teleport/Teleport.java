@@ -1,10 +1,13 @@
 package collax.teleport;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
+import net.minecraft.text.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,5 +67,19 @@ public class Teleport {
                 }
             }
         });
+    }
+
+    public static Text getMsg(String player){
+        Text accept = new LiteralText("/tpa accept " + player).styled((style -> style.withColor(Formatting.GREEN).
+                withBold(true).
+                withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + player)).
+                setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("tpa accept " + player)))));
+
+        Text deny = new LiteralText("/tpa deny " + player).styled((style -> style.withColor(Formatting.RED).
+                withBold(true).
+                withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa deny " + player)).
+                setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("tpa deny " + player)))));
+
+        return new LiteralText(player + " te ha solicitado tp, usa ").append(accept).append(" para aceptar o ").append(deny).append(" para rechazar").styled((style) -> style.withColor(Formatting.YELLOW));
     }
 }

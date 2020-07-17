@@ -19,13 +19,13 @@ public class CustomTeleportCommand {
                         suggests((c, b) -> suggestMatching(CollaxGaming.getPlayers(c.getSource()), b)).
                         executes(context -> tp(context.getSource(), StringArgumentType.getString(context, "player")))).
                 then(literal("accept").
-                        then(CommandManager.argument("player2", StringArgumentType.word()).
+                        then(CommandManager.argument("player", StringArgumentType.word()).
                                 suggests((c, b) -> suggestMatching(CollaxGaming.getPlayers(c.getSource()), b)).
-                                executes(context -> accept(context.getSource(), StringArgumentType.getString(context, "player2"))))).
+                                executes(context -> accept(context.getSource(), StringArgumentType.getString(context, "player"))))).
                 then(literal("deny").
-                        then(CommandManager.argument("player3", StringArgumentType.word()).
+                        then(CommandManager.argument("player", StringArgumentType.word()).
                                 suggests((c, b) -> suggestMatching(CollaxGaming.getPlayers(c.getSource()), b)).
-                                executes(context -> deny(context.getSource(), StringArgumentType.getString(context, "player3"))))));
+                                executes(context -> deny(context.getSource(), StringArgumentType.getString(context, "player"))))));
     }
 
     private static int tp(ServerCommandSource source, String player) throws CommandSyntaxException {
@@ -33,7 +33,6 @@ public class CustomTeleportCommand {
         if (playerEntity instanceof ServerPlayerEntity){
 
             if (playerEntity.isSpectator()) {
-
                 if (Integer.parseInt(CollaxGaming.permsArray.get(source.getPlayer().getName().getString())) > 2){
 
                     Teleport.addPlayer(source.getPlayer().getName().getString(), player);

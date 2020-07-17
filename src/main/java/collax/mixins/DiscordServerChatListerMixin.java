@@ -18,6 +18,7 @@ public class DiscordServerChatListerMixin {
     @Shadow public ServerPlayerEntity player;
     @Inject(method = "onGameMessage", at = @At("RETURN"))
     public void chatMessage(ChatMessageC2SPacket packet, CallbackInfo ci){
+        System.out.println("[" + player.getName().getString() + "] " + packet.getChatMessage());
         if (Arrays.asList(CollaxGaming.bannedWords).contains(packet.getChatMessage())) return;
         if (!packet.getChatMessage().startsWith("/")) DiscordListener.sendMessage("`<" + player.getName().getString() + ">` " + packet.getChatMessage());
     }

@@ -3,6 +3,7 @@ package collax.mixins;
 import collax.CollaxFileManager;
 import collax.discord.DiscordFileManager;
 import collax.discord.DiscordListener;
+import collax.teleport.Teleport;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +20,7 @@ public class DiscordRunMixin {
                 if (result[2].equals("true")) {
                     try {
                         DiscordListener.connect((MinecraftServer) (Object) this, result[0], result[1]);
+                        Teleport.server = (MinecraftServer) (Object) this;
                     } catch (Exception e) {
                         System.out.println(e);
                     }

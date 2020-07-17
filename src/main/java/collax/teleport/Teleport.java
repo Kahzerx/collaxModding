@@ -1,5 +1,6 @@
 package collax.teleport;
 
+import collax.discord.DiscordListener;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.MinecraftServer;
@@ -13,19 +14,22 @@ import java.util.HashMap;
 
 public class Teleport {
     public static HashMap<String, TPAList> tpa = new HashMap<>();
-
+    public static MinecraftServer server;
     public static ArrayList<String> players2remove = new ArrayList<>();
-
     public static void addPlayer(String player1, String player2){
         tpa.put(player1, new TPAList(player2));
-        System.out.println(tpa);
     }
 
     public static void subTime(){
         tpa.forEach((pl, guanlu) -> {
-            System.out.println(guanlu.x);
             guanlu.x--;
-            if (guanlu.x <= 0) players2remove.add(pl);
+            if (guanlu.x <= 0) {
+                players2remove.add(pl);
+                server.getPlayerManager().getPlayer(guanlu.player);
+                ServerPlayerEntity playerEntity = server.getPlayerManager().getPlayer(guanlu.player);
+                assert playerEntity != null;
+                playerEntity.sendMessage(new LiteralText("El tpa de " + pl + " ha expirado"), false);
+            }
         });
     }
 
@@ -50,6 +54,8 @@ public class Teleport {
                         playerEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.CONDUIT_POWER, 999999, 0, false, false));
                     }
                     playerEntity2.teleport(playerEntity.getServerWorld(), playerEntity.getPos().x, playerEntity.getPos().y, playerEntity.getPos().z, playerEntity2.yaw, playerEntity2.pitch);
+                    playerEntity.sendMessage(new LiteralText("Done :3"), false);
+                    playerEntity2.sendMessage(new LiteralText("Te has hecho tp a " + player1), false);
                     players2remove.add(pl);
                 }
             }
@@ -63,6 +69,10 @@ public class Teleport {
                 ServerPlayerEntity playerEntity2 = server.getPlayerManager().getPlayer(player2);
                 if (playerEntity instanceof ServerPlayerEntity && playerEntity2 instanceof ServerPlayerEntity){
                     players2remove.add(pl);
+                    playerEntity.sendMessage(new LiteralText("Rekt"), false);
+                    MutableText denied = new LiteralText("✓✓ ").styled(style -> style.withColor(Formatting.AQUA));
+                    Text finalMsg = new LiteralText(player1 + " te ha dejado en veido :(").styled(style -> style.withColor(Formatting.WHITE));
+                    playerEntity2.sendMessage(denied.append(finalMsg), false);
                 }
             }
         });

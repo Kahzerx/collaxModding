@@ -70,19 +70,23 @@ public class HomeFileManager {
             }
 
             else {
-                ServerWorld dimension = player.getServer().getWorld(World.OVERWORLD);
-                switch (dim){
-                    case "Overworld":
-                        dimension = player.getServer().getWorld(World.OVERWORLD);
-                        break;
-                    case "Nether":
-                        dimension = player.getServer().getWorld(World.NETHER);
-                        break;
-                    case "End":
-                        dimension = player.getServer().getWorld(World.END);
-                        break;
+                if (player.getVelocity().y < -1.5) player.sendMessage(new LiteralText("Casi crack"), false);
+                else {
+                    player.setVelocity(player.getVelocity().x, 0, player.getVelocity().z);
+                    ServerWorld dimension = player.getServer().getWorld(World.OVERWORLD);
+                    switch (dim) {
+                        case "Overworld":
+                            dimension = player.getServer().getWorld(World.OVERWORLD);
+                            break;
+                        case "Nether":
+                            dimension = player.getServer().getWorld(World.NETHER);
+                            break;
+                        case "End":
+                            dimension = player.getServer().getWorld(World.END);
+                            break;
+                    }
+                    player.teleport(dimension, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z), player.yaw, player.pitch);
                 }
-                player.teleport(dimension, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z), player.yaw, player.pitch);
             }
         }
     }

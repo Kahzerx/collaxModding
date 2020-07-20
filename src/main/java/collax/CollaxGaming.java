@@ -9,6 +9,7 @@ import collax.home.SetHomeCommand;
 import collax.perms.PermsCommand;
 import collax.randomTp.RandomTpCommand;
 import collax.discord.DiscordCommand;
+import collax.spoof.SpoofCommand;
 import collax.teleport.AdminTeleportCommand;
 import collax.teleport.CustomTeleportCommand;
 import collax.where.WhereCommand;
@@ -42,6 +43,7 @@ public class CollaxGaming {
         SurvivalCommand.register(dispatcher);
         CustomTeleportCommand.register(dispatcher);
         AdminTeleportCommand.register(dispatcher);
+        SpoofCommand.register(dispatcher);
     }
 
     public static String getDimensionWithColor(ServerPlayerEntity player) {
